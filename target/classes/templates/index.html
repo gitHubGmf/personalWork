@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>后台管理系统</title>
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link rel="stylesheet" type="text/css"
+	href="lib/bootstrap/css/bootstrap.css">
+
+<link rel="stylesheet" type="text/css" href="stylesheets/theme.css">
+<link rel="stylesheet" href="lib/font-awesome/css/font-awesome.css">
+
+<script src="lib/jquery-1.7.2.min.js" type="text/javascript"></script>
+<style type="text/css">
+#line-chart {
+	height: 300px;
+	width: 800px;
+	margin: 0px auto;
+	margin-top: 1em;
+}
+
+.brand {
+	font-family: georgia, serif;
+}
+
+.brand .first {
+	color: #ccc;
+	font-style: italic;
+}
+
+.brand .second {
+	color: #fff;
+	font-weight: bold;
+}
+
+#pic1 {
+	width: 400px;
+	height: 400px;
+	margin: 20px auto;
+}
+</style>
+<!-- Le fav and touch icons -->
+<link rel="shortcut icon" href="../assets/ico/favicon.ico">
+<link rel="apple-touch-icon-precomposed" sizes="144x144"
+	href="../assets/ico/apple-touch-icon-144-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114"
+	href="../assets/ico/apple-touch-icon-114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72"
+	href="../assets/ico/apple-touch-icon-72-precomposed.png">
+<link rel="apple-touch-icon-precomposed"
+	href="../assets/ico/apple-touch-icon-57-precomposed.png">
+</head>
+<body class="">
+	<div class="navbar">
+		<div class="navbar-inner">
+			<ul class="nav pull-right">
+				<li><a href="#"
+					class="hidden-phone visible-tablet visible-desktop" role="button">设置</a></li>
+				<li id="fat-menu" class="dropdown"><a href="#" role="button"
+					class="dropdown-toggle" data-toggle="dropdown"> <i
+						class="icon-user"></i> 郭梦菲 <i class="icon-caret-down"></i>
+				</a>
+					<ul class="dropdown-menu">
+						<li><a tabindex="-1" href="/">我的账号</a></li>
+					</ul></li>
+			</ul>
+			<a class="brand" href="#"><span class="first">个人</span> <span
+				class="second">作品&nbsp;&nbsp;&nbsp;(测试，不完善的地方敬请见谅!)</span></a>
+				
+		</div>
+	</div>
+	<div class="sidebar-nav">
+		<
+		<!-- form class="search form-inline">
+            <input type="text" placeholder="Search...">
+        </form> -->
+		<a href="/echars" class="nav-header"><i class="icon-question-sign"></i>性别分布统计</a>
+		<a th:href="@{/listUser(curentPage=1)}" class="nav-header"><i
+			class="icon-dashboard"></i>用户信息管理</a>
+
+	</div>
+	<div class="content">
+		<div class="header">
+			<h1 class="page-title">性别分布统计</h1>
+		</div>
+		<div id="pic1"></div>
+	</div>
+	<script src="lib/echarts/echarts.common.min.js"></script>
+	<input type="hidden" id="sexValueMan" th:value="${sexValue[0]}">
+	<input type="hidden" id="sexValueWoMan" th:value="${sexValue[1]}">
+	<script>
+		//echarts空间代码
+		var manValue = document.getElementById('sexValueMan').value;
+		var womanValue = document.getElementById('sexValueWoMan').value;
+		var myCharts1 = echarts.init(document.getElementById('pic1'));
+		var option1 = {
+			backgroundColor : 'white',
+
+			title : {
+				text : '性别比例统计',
+				left : 'center',
+				top : 20,
+				textStyle : {
+					color : '#ccc'
+				}
+			},
+			tooltip : {
+				trigger : 'item',
+				formatter : "{a} <br/>{b} : {d}%"
+			},
+
+			visualMap : {
+				show : false,
+				min : 500,
+				max : 600,
+				inRange : {
+					colorLightness : [ 0, 1 ]
+				}
+			},
+			series : [ {
+				name : '性别比例统计',
+				type : 'pie',
+				clockwise : 'true',
+				startAngle : '0',
+				radius : '60%',
+				center : [ '50%', '50%' ],
+				data : [
+
+				{
+					value : manValue,
+					name : '男',
+					itemStyle : {
+						normal : {
+							color : 'rgb(1,175,80)'
+						}
+					}
+				}, {
+					value : womanValue,
+					name : '女',
+					itemStyle : {
+						normal : {
+							color : 'rgb(122,48,158)'
+						}
+					}
+				}
+
+				],
+			} ]
+		};
+		myCharts1.setOption(option1);
+	</script>
+	<script src="lib/bootstrap/js/bootstrap.js"></script>
+</body>
+</html>
+
+
